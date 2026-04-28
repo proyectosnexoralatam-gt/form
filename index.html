@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Censo de Necesidades - Nexora</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'nexora-logo': ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        nexora: {
+                            50: '#f2fcf5',
+                            100: '#e1f8e8',
+                            200: '#c3f1d1',
+                            300: '#96e4af',
+                            400: '#69D389',
+                            500: '#43bd68',
+                            600: '#309d51',
+                            700: '#287c42',
+                            800: '#246237',
+                            900: '#1F2020',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #69D389 #f9fafb;
+        }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #f9fafb; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #69D389; border-radius: 8px; border: 2px solid #f9fafb; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #43bd68; }
+        
+        /* Animación para el botón de WhatsApp */
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .whatsapp-btn {
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .whatsapp-btn:hover {
+            animation: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-nexora-100 selection:text-nexora-900 overflow-x-hidden relative">
+
+    <!-- VISTA PRINCIPAL -->
+    <div id="mainView" class="min-h-screen flex flex-col py-4 px-3 sm:py-8 sm:px-6 lg:px-8 transition-opacity duration-300">
+        
+        <div class="w-full text-center mb-6 sm:mb-8 fade-in">
+            <div class="flex justify-center items-center mb-4 sm:mb-6 px-2">
+                <img src="Logo.png" alt="Logo Nexora" onerror="this.src='https://via.placeholder.com/150x50?text=Nexora'" class="h-16 sm:h-20 md:h-28 w-auto rounded-lg">
+            </div>
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-900 px-2">Estudio de Necesidades Empresariales</h2>
+            <p class="mt-2 text-sm sm:text-base text-gray-600 max-w-3xl mx-auto px-2">
+                Ayúdanos a entender los retos diarios de tu negocio. Con tus respuestas, en <span class="font-medium text-nexora-600">Nexora</span> construiremos las herramientas tecnológicas que tu empresa realmente necesita para crecer.
+            </p>
+        </div>
+
+        <div class="w-full fade-in" style="animation-delay: 0.1s;">
+            <div class="bg-white py-6 px-4 sm:py-8 sm:px-10 shadow-xl rounded-2xl border border-gray-100 relative overflow-hidden">
+                
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-nexora-50 opacity-50 pointer-events-none"></div>
+
+                <form id="censusForm"
+                      action="https://script.google.com/macros/s/AKfycbyHb3-7rna4B1bf0K-cEu98DK4ya_UciN4g0OzOGAOdU-uuHjRUdxkZZS6-FLUOeZiXTA/exec"
+                      method="POST"
+                      class="space-y-6 sm:space-y-8 relative z-10">
+                    
+                    <!-- Datos Generales -->
+                    <div class="bg-gray-50 p-4 sm:p-6 rounded-xl border border-gray-100 mb-6">
+                        <h3 class="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Datos Generales</h3>
+                        <!-- Cambiamos a 3 columnas en pantallas grandes para incluir el teléfono -->
+                        <div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
+                            <div>
+                                <label for="companyName" class="block text-sm font-medium text-gray-700">Nombre de la empresa <span class="text-red-500">*</span></label>
+                                <div class="mt-1">
+                                    <input required type="text" id="companyName" name="companyName" placeholder="Ej. Mi Negocio S.A." 
+                                        class="appearance-none block w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-nexora-500 focus:border-nexora-500 text-sm transition-colors">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico <span class="text-red-500">*</span></label>
+                                <div class="mt-1">
+                                    <input required type="email" id="email" name="email" placeholder="correo@empresa.com" 
+                                        class="appearance-none block w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-nexora-500 focus:border-nexora-500 text-sm transition-colors">
+                                </div>
+                            </div>
+                            <!-- SECCIÓN DE TELÉFONO AGREGADA -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Número de teléfono <span class="text-red-500">*</span></label>
+                                <div class="mt-1">
+                                    <input required type="tel" id="phone" name="phone" placeholder="Ej. +502 1234 5678" 
+                                        class="appearance-none block w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-nexora-500 focus:border-nexora-500 text-sm transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-4 sm:pt-6"></div>
+
+                    <!-- Pregunta 1 -->
+                    <div>
+                        <label class="text-base sm:text-lg font-medium text-gray-900 flex items-start gap-2 sm:gap-3">
+                            <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-nexora-100 text-nexora-700 text-xs sm:text-sm mt-0.5 font-semibold">1</span>
+                            <span>¿Cuál es el principal problema que enfrenta en la administración diaria de su negocio? <span class="text-red-500">*</span></span>
+                        </label>
+                        <p class="text-xs sm:text-sm text-gray-500 ml-8 sm:ml-10 mb-3 sm:mb-4">Seleccione la opción que más le afecte.</p>
+                        <div class="mt-2 sm:mt-0 sm:ml-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input required type="radio" name="q1_problem" value="inventario" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Control de inventario y stock</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q1_problem" value="ventas" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Registro de ventas y facturación</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q1_problem" value="clientes" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Seguimiento a clientes y cobros</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q1_problem" value="finanzas" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Cálculo de ganancias y gastos</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q1_problem" value="otro" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Otro</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div>
+                        <label class="text-base sm:text-lg font-medium text-gray-900 flex items-start gap-2 sm:gap-3">
+                            <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-nexora-100 text-nexora-700 text-xs sm:text-sm mt-0.5 font-semibold">2</span>
+                            <span>¿Actualmente utiliza alguna herramienta para organizar esta información? <span class="text-red-500">*</span></span>
+                        </label>
+                        <div class="mt-3 sm:mt-4 sm:ml-10 space-y-3">
+                            <select required name="q2_tool" class="mt-1 block w-full pl-3 pr-10 py-3 text-sm sm:text-base border-gray-300 border focus:outline-none focus:ring-nexora-500 focus:border-nexora-500 rounded-lg bg-white">
+                                <option value="" disabled selected>Seleccione una opción...</option>
+                                <option value="cuaderno">No, uso cuaderno / papel</option>
+                                <option value="excel">Uso hojas de cálculo (Excel, Google Sheets)</option>
+                                <option value="software_basico">Uso un software o app básica</option>
+                                <option value="software_avanzado">Uso un sistema avanzado, pero no es suficiente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div>
+                        <label class="text-base sm:text-lg font-medium text-gray-900 flex items-start gap-2 sm:gap-3">
+                            <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-nexora-100 text-nexora-700 text-xs sm:text-sm mt-0.5 font-semibold">3</span>
+                            <span>¿En qué área siente que su equipo pierde más tiempo haciendo tareas manuales? <span class="text-red-500">*</span></span>
+                        </label>
+                        <p class="text-xs sm:text-sm text-gray-500 ml-8 sm:ml-10 mb-3 sm:mb-4">Puede seleccionar más de una opción.</p>
+                        
+                        <!-- Input oculto -->
+                        <input type="hidden" name="q3_time_loss" id="q3_time_loss_hidden">
+
+                        <div class="mt-2 sm:mt-0 sm:ml-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="checkbox" class="q3-checkbox h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300 rounded" value="Buscando productos/precios">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Buscando productos/precios</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="checkbox" class="q3-checkbox h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300 rounded" value="Haciendo cierres de caja">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Haciendo cierres de caja</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="checkbox" class="q3-checkbox h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300 rounded" value="Creando cotizaciones">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Creando cotizaciones</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="checkbox" class="q3-checkbox h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300 rounded" value="Generando reportes">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Generando reportes</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div>
+                        <label class="text-base sm:text-lg font-medium text-gray-900 flex items-start gap-2 sm:gap-3">
+                            <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-nexora-100 text-nexora-700 text-xs sm:text-sm mt-0.5 font-semibold">4</span>
+                            <span>Si pudiera pedirle a un "sistema mágico" que haga una sola cosa automáticamente, ¿qué sería? <span class="text-red-500">*</span></span>
+                        </label>
+                        <div class="mt-3 sm:mt-4 sm:ml-10">
+                            <textarea id="q4_magic" name="q4_magic" rows="3" required placeholder="Ej. Que me avise cuando un producto se está agotando..."
+                                class="shadow-sm focus:ring-nexora-500 focus:border-nexora-500 block w-full text-sm sm:text-base border-gray-300 border rounded-lg p-3 sm:p-4 resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 5 -->
+                    <div>
+                        <label class="text-base sm:text-lg font-medium text-gray-900 flex items-start gap-2 sm:gap-3">
+                            <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-nexora-100 text-nexora-700 text-xs sm:text-sm mt-0.5 font-semibold">5</span>
+                            <span>¿Estaría dispuesto a invertir en un sistema fácil de usar si le ahorrara tiempo y dinero? <span class="text-red-500">*</span></span>
+                        </label>
+                        <div class="mt-3 sm:mt-4 sm:ml-10 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input required type="radio" name="q5_investment" value="Sí, definitivamente" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Sí, definitivamente</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q5_investment" value="Depende del precio y facilidad" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">Depende del precio y facilidad</span>
+                            </label>
+                            <label class="flex items-center p-3 sm:p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-nexora-500 has-[:checked]:bg-nexora-50">
+                                <input type="radio" name="q5_investment" value="No por el momento" class="h-4 w-4 flex-shrink-0 text-nexora-600 focus:ring-nexora-500 border-gray-300">
+                                <span class="ml-3 block text-sm font-medium text-gray-700">No por el momento</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botón enviar -->
+                    <div class="pt-4 sm:pt-6 sm:ml-10">
+                        <button id="submitBtn" type="submit" class="w-full md:w-auto md:px-12 flex justify-center mx-auto py-3.5 sm:py-4 px-6 border border-transparent rounded-lg shadow-sm text-sm sm:text-base font-semibold text-nexora-900 bg-nexora-400 hover:bg-nexora-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexora-500 transition-colors gap-2 items-center disabled:opacity-75 disabled:cursor-not-allowed">
+                            <span id="submitText">Enviar mis respuestas</span>
+                            <i id="submitIcon" data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        
+        <div class="mt-6 sm:mt-8 pb-4 sm:pb-8 text-center text-xs sm:text-sm text-gray-500">
+            &copy; 2026 Nexora. Todos los derechos reservados.
+        </div>
+    </div>
+
+    <!-- VISTA DE ÉXITO -->
+    <div id="successView" class="hidden min-h-screen w-full bg-white flex-col justify-center items-center px-4 py-12 fade-in">
+        <div class="max-w-2xl w-full text-center flex flex-col items-center">
+            <div class="flex items-center justify-center h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-nexora-100 mb-8">
+                <i data-lucide="check-circle" class="h-10 w-10 sm:h-12 sm:w-12 text-nexora-600"></i>
+            </div>
+            
+            <h3 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4 tracking-tight">¡Muchas gracias por haber llenado el formulario!</h3>
+            
+            <p class="text-base sm:text-xl text-gray-600 mb-10 leading-relaxed">
+                Tus respuestas han sido registradas exitosamente. Esta información es muy valiosa para que en <span class="font-medium text-nexora-600">Nexora</span> podamos construir la solución perfecta para tu negocio.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+                <a href="https://nexora-latam.github.io/web/index.html" target="_blank" class="inline-flex justify-center items-center px-8 py-3.5 border border-transparent rounded-lg shadow-sm text-base font-semibold text-nexora-900 bg-nexora-400 hover:bg-nexora-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexora-500 transition-colors w-full sm:w-auto">
+                    <i data-lucide="users" class="w-5 h-5 mr-2"></i>
+                    Conoce quiénes somos
+                </a>
+                <button onclick="location.reload()" class="inline-flex justify-center items-center py-3.5 px-8 border border-gray-300 rounded-lg shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nexora-500 transition-colors w-full sm:w-auto">
+                    Volver al inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/50254204183?text=Hola,%20tengo%20una%20duda%20sobre%20el%20Censo%20de%20Necesidades%20de%20Nexora" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 bg-[#25D366] text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex items-center justify-center whatsapp-btn">
+        
+        <!-- Icono oficial en SVG de WhatsApp -->
+        <svg viewBox="0 0 24 24" class="w-7 h-7 sm:w-8 sm:h-8 fill-current" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+
+        <!-- Tooltip que aparece al hacer hover -->
+        <span class="absolute right-full mr-4 bg-gray-900 text-white text-sm px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-md hidden sm:block font-medium">
+            Comunicate con nosotros
+            <!-- Triángulo indicador del tooltip -->
+            <span class="absolute top-1/2 -right-1 transform -translate-y-1/2 border-t-4 border-t-transparent border-b-4 border-b-transparent border-l-4 border-l-gray-900"></span>
+        </span>
+    </a>
+
+    <script>
+        lucide.createIcons();
+
+        // Validación: al menos un checkbox de Q3 debe estar marcado
+        const q3Checkboxes = Array.from(document.querySelectorAll('.q3-checkbox'));
+
+        const updateQ3Validity = () => {
+            const isChecked = q3Checkboxes.some(cb => cb.checked);
+            q3Checkboxes[0].setCustomValidity(isChecked ? "" : "Por favor, seleccione al menos una opción.");
+        };
+        q3Checkboxes.forEach(cb => cb.addEventListener('change', updateQ3Validity));
+        updateQ3Validity();
+
+        const SCRIPT_URL = document.getElementById('censusForm').action;
+        const form       = document.getElementById('censusForm');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const submitBtn  = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+
+            submitBtn.disabled = true;
+            submitText.textContent = 'Enviando...';
+            submitIcon.setAttribute('data-lucide', 'loader-circle');
+            submitIcon.classList.add('animate-spin');
+            lucide.createIcons();
+
+            const formData = new FormData(form);
+
+            const checkedValues = q3Checkboxes
+                .filter(cb => cb.checked)
+                .map(cb => cb.value)
+                .join(', ');
+            formData.set('q3_time_loss', checkedValues);
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                mostrarVistaExito();
+
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitText.textContent = 'Enviar mis respuestas';
+                submitIcon.setAttribute('data-lucide', 'send');
+                submitIcon.classList.remove('animate-spin');
+                lucide.createIcons();
+                alert('Ocurrió un error al enviar. Por favor verifica tu conexión e intenta de nuevo.');
+            }
+        });
+
+        function mostrarVistaExito() {
+            const mainView    = document.getElementById('mainView');
+            const successView = document.getElementById('successView');
+
+            mainView.style.opacity = '0';
+
+            setTimeout(() => {
+                mainView.classList.replace('flex', 'hidden');
+                successView.classList.replace('hidden', 'flex');
+                lucide.createIcons();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+        }
+    </script>
+</body>
+</html>
